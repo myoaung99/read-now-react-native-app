@@ -1,11 +1,13 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import React from "react";
+import { Icon } from "@rneui/themed";
 // import Button from "./Button";
-import { Button } from "@rneui/base";
 
 const ListBookItem = ({ bookData }) => {
   return (
-    <View style={styles.listBooks}>
+    <Pressable
+      style={({ pressed }) => [styles.listBooks, pressed && styles.pressed]}
+    >
       <View style={styles.listBooks_imageContainer}>
         <Image
           style={styles.bookImg}
@@ -15,24 +17,15 @@ const ListBookItem = ({ bookData }) => {
         />
       </View>
 
-      <View style={styles.bookInfo}>
-        <View>
-          <Text style={styles.bookTitle}>{bookData.title}</Text>
-          <Text style={styles.bookDescription}>{bookData.shortDes}</Text>
-        </View>
-
-        <View style={styles.actionButton}>
-          <Button
-            onPress={() => {
-              console.log("Read book: ", bookData.title);
-            }}
-            title="Read"
-            color="#555555"
-            buttonStyle={{ width: 90 }}
-          />
+      <View style={styles.bookInfo} className="space-y-1">
+        <Text style={styles.bookTitle}>{bookData.title}</Text>
+        <Text style={styles.bookDescription}>{bookData.shortDes}</Text>
+        <View className="flex flex-row items-center gap-x-1 pt-1">
+          <Icon name="heart" type="ionicon" iconProps={{ size: 15 }} />
+          <Text className="text-sm">4.5</Text>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -59,7 +52,7 @@ const styles = StyleSheet.create({
   },
   bookInfo: {
     position: "relative",
-    paddingTop: 5,
+    paddingTop: 7,
     paddingLeft: 10,
     flex: 1,
   },
@@ -72,9 +65,7 @@ const styles = StyleSheet.create({
     width: "80%",
     fontSize: 12,
   },
-  actionButton: {
-    position: "absolute",
-    bottom: 0,
-    right: 0,
+  pressed: {
+    opacity: 0.75,
   },
 });
